@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5">
+  <meta name="description"
+    content="Agri Mitra – Practical, AI-assisted agricultural advisory platform for Indian farmers. Get reliable crop recommendations, real-time weather, and mandi prices.">
+  <title>Agri Mitra – Smart AI Guide for Farmers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ===== TOP NAVBAR ===== -->
+  <nav class="navbar" id="navbar" aria-label="Main Navigation">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" onclick="showPage('home')" aria-label="Agri Mitra Home">
+        <svg viewBox="0 0 40 40" fill="none" class="nav-logo-icon" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" fill="#1B5E20" opacity="0.14" />
+          <path d="M20 7c-2.2 4.4-6.5 6.6-6.5 13.2a6.5 6.5 0 1013 0c0-6.6-4.3-8.8-6.5-13.2z" fill="#1B5E20" />
+          <path d="M20 13.5c-1.1 2.2-3.3 3.3-3.3 6.6a3.3 3.3 0 006.6 0c0-3.3-2.2-4.4-3.3-6.6z" fill="#2E7D32" />
+        </svg>
+        <div class="logo-text-group">
+          <span class="logo-title" data-i18n="appName">Agri Mitra</span>
+          <span class="logo-tagline" data-i18n="appTagline">Smart Farmer Advisory</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" class="active" data-page="home" data-i18n="navHome">Home</a></li>
+        <li><a href="#" data-page="recommend" data-i18n="navCrop">Crop AI</a></li>
+        <li><a href="#" data-page="market" data-i18n="navMarket">Market</a></li>
+        <li><a href="#" data-page="dashboard" data-i18n="navDashboard">Dashboard</a></li>
+        <li class="nav-tools-item">
+          <div class="lang-toggle" role="group" aria-label="Language selection">
+            <button class="lang-btn active" id="langEN" onclick="setLanguage('en')"
+              aria-label="Switch to English">English</button>
+            <button class="lang-btn" id="langHI" onclick="setLanguage('hi')" aria-label="हिंदी में बदलें">हिंदी</button>
+          </div>
+        </li>
+        <li class="nav-tools-item">
+          <button class="dark-toggle" id="darkToggle" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode"
+            aria-label="Toggle Theme">
+            <span class="theme-icon">🌙</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="nav-actions-mobile">
+        <div class="lang-toggle mobile-lang-toggle" role="group" aria-label="Language selection mobile">
+          <button class="lang-btn active" id="m большинlangEN" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" id="mlangHI" onclick="setLanguage('hi')">हिं</button>
+        </div>
+        <button class="dark-toggle mobile-theme-toggle" id="mDarkToggle" onclick="toggleDarkMode()"
+          aria-label="Toggle Theme">🌙</button>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu"
+          aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
+
+  <!-- ===== HOME PAGE ===== -->
+  <main class="page active" id="page-home">
+    <!-- Hero Section: Clean, grounded, authentic -->
+    <section class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-icon">🌾</span>
+            <span data-i18n="heroBadge">Practical AI Agricultural Advisory</span>
+          </div>
+          <h1 class="hero-title" data-i18n="heroTitle">
+            Smart crop and market guidance built for Indian farmers.
+          </h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">
+            Make informed farming decisions with soil-specific crop suitability, live mandi prices, and local weather
+            insights grounded in agricultural science.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" onclick="showPage('recommend')">
+              🌱 <span data-i18n="btnCheckCrop">Check Best Crop</span>
+            </button>
+            <button class="btn btn-secondary btn-lg" onclick="showPage('market')">
+              📈 <span data-i18n="btnMarket">Live Mandi Prices</span>
+            </button>
+            <button class="btn btn-outline btn-lg" onclick="showPage('recommend')">
+              🌦 <span data-i18n="btnWeather">Weather & Soil</span>
+            </button>
+          </div>
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <span class="stat-number">35+</span>
+              <span class="stat-desc" data-i18n="statCropsCount">Indian Crops Modeled</span>
+            </div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat-item">
+              <span class="stat-number">700+</span>
+              <span class="stat-desc" data-i18n="statDistrictsCount">Districts Covered</span>
+            </div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat-item">
+              <span class="stat-number">100%</span>
+              <span class="stat-desc" data-i18n="statFreeOpen">Ad-Free & Free Access</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/farmer-real.webp" onerror="this.onerror=null; this.src='images/farmer-real.jpg';" alt="Authentic Indian farmer in agricultural crop field" id="heroImg"
+              class="hero-farmer-img" loading="eager">
+            <div class="hero-caption">
+              <span class="caption-icon">🇮🇳</span>
+              <span class="caption-text" data-i18n="heroCaption">Designed for practical farm decisions across Indian
+                agro-climatic zones</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & Agricultural Sources Section -->
+    <section class="trust-section">
+      <div class="container">
+        <div class="trust-card">
+          <div class="trust-header">
+            <div class="trust-title-row">
+              <span class="trust-pill">🛡️ <span data-i18n="trustTitle">Grounded in Agricultural Science & Govt
+                  Portals</span></span>
+            </div>
+            <p class="trust-subtitle" data-i18n="trustDesc">
+              Agri Mitra combines regional agronomic thresholds, verified soil test baselines, and official market
+              records.
+            </p>
+          </div>
+          <div class="trust-sources-grid">
+            <div class="trust-source-item">
+              <div class="source-icon">🏛</div>
+              <div class="source-text">
+                <strong data-i18n="source1Title">ICAR Agronomic Baselines</strong>
+                <p data-i18n="source1Desc">Standard nutrient (NPK), pH, and temperature tolerance thresholds for Indian
+                  crops.</p>
+              </div>
+            </div>
+            <div class="trust-source-item">
+              <div class="source-icon">🪨</div>
+              <div class="source-text">
+                <strong data-i18n="source2Title">Soil Health Card Portal</strong>
+                <p data-i18n="source2Desc">District-wise soil classification and nutrient baselines from DAC&FW.</p>
+              </div>
+            </div>
+            <div class="trust-source-item">
+              <div class="source-icon">🌦</div>
+              <div class="source-text">
+                <strong data-i18n="source3Title">IMD & Meteorological Data</strong>
+                <p data-i18n="source3Desc">Real-time local temperature, humidity, and rainfall indicators via Open-Meteo
+                  & IMD.</p>
+              </div>
+            </div>
+            <div class="trust-source-item">
+              <div class="source-icon">📈</div>
+              <div class="source-text">
+                <strong data-i18n="source4Title">Data.gov.in / Agmarknet</strong>
+                <p data-i18n="source4Desc">Official mandi arrivals, modal prices, and CACP Minimum Support Prices (MSP
+                  2025-26).</p>
+              </div>
+            </div>
+          </div>
+          <div class="trust-disclaimer">
+            <span class="disclaimer-icon">ℹ️</span>
+            <p data-i18n="trustDisclaimer">
+              <strong>Advisory Notice:</strong> AI crop recommendations are decision-support guidelines based on
+              regional averages. Local soil depth, micro-climates, and irrigation access vary. Always verify field
+              observations with your local Krishi Vigyan Kendra (KVK) or block agriculture officer before making
+              significant investments.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works: 3 Practical Steps -->
+    <section class="section how-it-works-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label" data-i18n="howLabel">How It Works</span>
+          <h2 class="section-title" data-i18n="howTitle">Simple 3-Step Process</h2>
+          <p class="section-subtitle" data-i18n="howSubtitle">Enter your field conditions or auto-fill by district to
+            receive practical crop guidance.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-badge">1</div>
+            <h3 data-i18n="step1Title">Enter Field Info</h3>
+            <p data-i18n="step1Desc">Provide your soil type, NPK levels, or simply auto-fill with your nearest city or
+              district.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-badge">2</div>
+            <h3 data-i18n="step2Title">Agronomic Analysis</h3>
+            <p data-i18n="step2Desc">Our model cross-references your soil and weather against scientific crop growth
+              requirements.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-badge">3</div>
+            <h3 data-i18n="step3Title">Actionable Guidance</h3>
+            <p data-i18n="step3Desc">Review recommended crops, sowing window, expected yield, and calculate seed needs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features: Practical Tools -->
+    <section class="section features-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label" data-i18n="featLabel">Tools for Farmers</span>
+          <h2 class="section-title" data-i18n="featTitle">Designed for Real Farming Decisions</h2>
+          <p class="section-subtitle" data-i18n="featSubtitle">Reliable digital tools that assist without overwhelming.
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card" onclick="showPage('recommend')">
+            <div class="feature-icon green">🌱</div>
+            <h3 data-i18n="feat1Title">AI Crop Recommendation</h3>
+            <p data-i18n="feat1Desc">Calibrated crop suitability scoring tailored to your exact soil chemistry and
+              climate conditions.</p>
+            <span class="feature-link">Explore Crop AI →</span>
+          </div>
+          <div class="feature-card" onclick="showPage('recommend')">
+            <div class="feature-icon blue">🌦</div>
+            <h3 data-i18n="feat2Title">Weather & Soil Data</h3>
+            <p data-i18n="feat2Desc">Automatic retrieval of temperature, humidity, and rainfall baselines for 700+
+              Indian districts.</p>
+            <span class="feature-link">Check Weather & Soil →</span>
+          </div>
+          <div class="feature-card" onclick="showPage('market')">
+            <div class="feature-icon amber">📈</div>
+            <h3 data-i18n="feat3Title">Mandi Prices & Trends</h3>
+            <p data-i18n="feat3Desc">Daily modal prices from agricultural mandis across states, with MSP benchmarks and
+              seasonal trends.</p>
+            <span class="feature-link">View Mandi Prices →</span>
+          </div>
+          <div class="feature-card" onclick="showPage('dashboard')">
+            <div class="feature-icon brown">🧑‍🌾</div>
+            <h3 data-i18n="feat4Title">Farmer Dashboard</h3>
+            <p data-i18n="feat4Desc">Save recommendations, track crop plans, and monitor regional seasonal advisories in
+              one place.</p>
+            <span class="feature-link">Open Dashboard →</span>
+          </div>
+          <div class="feature-card" onclick="showPage('recommend')">
+            <div class="feature-icon green">🎤</div>
+            <h3 data-i18n="feat5Title">Voice Input Support</h3>
+            <p data-i18n="feat5Desc">Speak your soil parameters in Hindi or English for effortless, typing-free form
+              completion.</p>
+            <span class="feature-link">Try Voice Input →</span>
+          </div>
+          <div class="feature-card" onclick="toggleChat()">
+            <div class="feature-icon blue">💬</div>
+            <h3 data-i18n="feat6Title">Agricultural Assistant</h3>
+            <p data-i18n="feat6Desc">Ask practical farming questions about fertilizer balancing, organic inputs, and
+              government schemes.</p>
+            <span class="feature-link">Ask Assistant →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick CTA -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-banner">
+          <div class="cta-text">
+            <h2 data-i18n="ctaTitle">Ready to test your farm conditions?</h2>
+            <p data-i18n="ctaSubtitle">Enter your district name to instantly load regional soil and climate parameters.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <button class="btn btn-primary btn-lg" onclick="showPage('recommend')">
+              🌱 <span data-i18n="btnGetStarted">Start Crop Recommendation</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div class="footer-brand">
+              <span class="footer-logo">🌿 Agri Mitra</span>
+              <p class="footer-desc" data-i18n="footerAbout">
+                Practical, science-grounded agricultural advisory helping Indian farmers make confident crop choices and
+                stay informed on real market prices.
+              </p>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerQuickLinks">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="#" onclick="showPage('home')" data-i18n="navHome">Home</a></li>
+              <li><a href="#" onclick="showPage('recommend')" data-i18n="navCrop">Crop AI Advisory</a></li>
+              <li><a href="#" onclick="showPage('market')" data-i18n="navMarket">Mandi Prices</a></li>
+              <li><a href="#" onclick="showPage('dashboard')" data-i18n="navDashboard">Farmer Dashboard</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerGovtPortals">Key Agricultural Portals</h4>
+            <ul class="footer-links">
+              <li><a href="https://soilhealth.dac.gov.in" target="_blank" rel="noopener">Soil Health Card Portal ↗</a>
+              </li>
+              <li><a href="https://agmarknet.gov.in" target="_blank" rel="noopener">Agmarknet Mandi Portal ↗</a></li>
+              <li><a href="https://mausam.imd.gov.in" target="_blank" rel="noopener">IMD Mausam Portal ↗</a></li>
+              <li><a href="https://seedtrace.gov.in" target="_blank" rel="noopener">SeedTrace India ↗</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footerHelpline">Farmer Support</h4>
+            <div class="footer-contact-info">
+              <p><strong>Kisan Call Centre:</strong> 1800-180-1551 (Toll Free)</p>
+              <p><strong>Available:</strong> 6:00 AM – 10:00 PM</p>
+              <p><strong>Languages:</strong> 22 Regional Languages</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Agri Mitra · Built with care for Indian farmers · Dedicated to data transparency and rural usability
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ===== CROP RECOMMENDATION PAGE (PRECISION ADVISORY) ===== -->
+  <main class="page" id="page-recommend">
+    <section class="section">
+      <div class="container form-container">
+        <div class="section-header animate-fade-in-up">
+          <span class="section-label" data-i18n="cropPageBadge">🌱 Precision Crop Advisory</span>
+          <h2 class="section-title" data-i18n="cropPageTitle">Crop Recommendation</h2>
+          <p class="section-subtitle" data-i18n="cropPageSubtitle">Provide your field's soil nutrient values and weather
+            parameters to evaluate the best-suited crops.</p>
+        </div>
+
+        <div class="crop-form-card">
+          <!-- Form Header & Voice Input Bar -->
+          <div class="crop-form-header-row">
+            <div>
+              <h3 class="form-title" data-i18n="cropFormTitle">🌾 Field & Soil Assessment</h3>
+              <p class="form-subtext" data-i18n="cropFormSubtext">Complete the three sections below or use Auto-Fill to
+                populate regional baselines.</p>
+            </div>
+            <div class="voice-assistant-badge">
+              <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" type="button" title="Voice Input"
+                aria-label="Start Voice Input">
+                <span class="voice-icon">🎤</span>
+              </button>
+              <div class="voice-status-wrapper">
+                <span id="voiceStatus" class="voice-status-text" data-i18n="voiceHint">Tap mic to speak</span>
+                <span id="voiceStateIndicator" class="voice-state-tag">Ready</span>
+              </div>
+            </div>
+          </div>
+
+          <form id="cropForm" onsubmit="return predictCrop(event)" novalidate>
+            <!-- Auto-Fill Toolbar -->
+            <div class="autofill-container">
+              <div class="autofill-header">
+                <label for="autofillCity" class="autofill-label">
+                  <span class="autofill-label-icon">📍</span>
+                  <span data-i18n="autofillLabel">Fast Auto-Fill by City or District</span>
+                </label>
+                <span class="autofill-note" data-i18n="autofillNote">Fills district soil baselines & live weather</span>
+              </div>
+              <div class="autofill-bar">
+                <input type="text" id="autofillCity"
+                  placeholder="e.g. Jaipur, Karnal, Pune, Patna, Solapur, Indore, Nagpur..." class="autofill-input"
+                  data-i18n-placeholder="autofillPlaceholder" autocomplete="off">
+                <button type="button" id="autofillBtn" class="btn btn-primary autofill-action-btn"
+                  onclick="autofillFromCity()">
+                  ⚡ <span data-i18n="btnAutoFill">Auto-Fill Data</span>
+                </button>
+              </div>
+              <div class="autofill-status-bar" id="autofillStatusBar">
+                <span class="status-indicator-dot"></span>
+                <span id="autofillStatusMsg" data-i18n="autofillSourceHint">Sourced from Soil Health Card Portal &
+                  Open-Meteo live weather</span>
+              </div>
+            </div>
+
+            <!-- Weather Details Panel (Displays fetched live weather) -->
+            <div id="cropWeatherSection" class="crop-weather-card" style="display:none;">
+              <div id="weatherContent">
+                <div class="weather-summary-box">
+                  <div class="weather-icon" id="wMainIcon">☀️</div>
+                  <div class="weather-summary-text">
+                    <div class="weather-temp-row">
+                      <span class="weather-temp" id="wTemp">--°C</span>
+                      <span class="weather-location-pill" id="wLocation">📍 --</span>
+                    </div>
+                    <div class="weather-desc" id="wDesc">Live agricultural weather retrieved</div>
+                  </div>
+                </div>
+                <div class="weather-details-grid">
+                  <div class="weather-detail-card">
+                    <div class="wd-icon">💧</div>
+                    <div class="wd-label" data-i18n="wdHumidity">Humidity</div>
+                    <div class="wd-value" id="wHumidity">--%</div>
+                  </div>
+                  <div class="weather-detail-card">
+                    <div class="wd-icon">💨</div>
+                    <div class="wd-label" data-i18n="wdWind">Wind Speed</div>
+                    <div class="wd-value" id="wWind">-- km/h</div>
+                  </div>
+                  <div class="weather-detail-card">
+                    <div class="wd-icon">🌧</div>
+                    <div class="wd-label" data-i18n="wdRainfall">Monthly Rain</div>
+                    <div class="wd-value" id="wRainfall">-- mm</div>
+                  </div>
+                  <div class="weather-detail-card">
+                    <div class="wd-icon">👁</div>
+                    <div class="wd-label" data-i18n="wdVisibility">Visibility</div>
+                    <div class="wd-value" id="wVisibility">-- km</div>
+                  </div>
+                  <div class="weather-detail-card">
+                    <div class="wd-icon">🌡</div>
+                    <div class="wd-label" data-i18n="wdFeelsLike">Feels Like</div>
+                    <div class="wd-value" id="wFeelsLike">--°C</div>
+                  </div>
+                  <div class="weather-detail-card">
+                    <div class="wd-icon">🌅</div>
+                    <div class="wd-label" data-i18n="wdPressure">Pressure</div>
+                    <div class="wd-value" id="wPressure">-- hPa</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 1: Location & Soil Classification -->
+            <fieldset class="form-section-fieldset">
+              <legend class="form-section-legend">
+                <span class="legend-step-num">1</span>
+                <span class="legend-title" data-i18n="sec1Title">Location & Soil Type</span>
+                <span class="field-badge required-badge" data-i18n="badgeRequired">Required</span>
+              </legend>
+              <div class="form-grid form-grid-2col">
+                <div class="form-group" id="group-Location">
+                  <div class="label-row">
+                    <label for="inputLocation" data-i18n="labelLocation">📍 State / Region *</label>
+                    <span class="data-source-tag" id="sourceTag-Location">Manual</span>
+                  </div>
+                  <select id="inputLocation" required onchange="markFieldManual('Location')">
+                    <option value="">Select State (राज्य चुनें)</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Bihar</option>
+                    <option>Chhattisgarh</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Himachal Pradesh</option>
+                    <option>Jharkhand</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Odisha</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Tamil Nadu</option>
+                    <option>Telangana</option>
+                    <option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option>
+                    <option>West Bengal</option>
+                  </select>
+                  <span class="field-hint" data-i18n="hintLocation">Used for regional agro-climatic zone
+                    calibration</span>
+                  <div class="field-error" id="err-Location"></div>
+                </div>
+
+                <div class="form-group" id="group-SoilType">
+                  <div class="label-row">
+                    <label for="inputSoilType" data-i18n="labelSoilType">🪨 Soil Classification *</label>
+                    <span class="data-source-tag" id="sourceTag-SoilType">Manual</span>
+                  </div>
+                  <select id="inputSoilType" required onchange="markFieldManual('SoilType')">
+                    <option value="">Select Soil Type (मिट्टी का प्रकार)</option>
+                    <option value="alluvial">Alluvial (जलोढ़ मिट्टी - Deep, fertile)</option>
+                    <option value="black">Black / Regur (काली मिट्टी - Cotton, moisture retentive)</option>
+                    <option value="red">Red Soil (लाल मिट्टी - Porous, iron rich)</option>
+                    <option value="laterite">Laterite (लेटराइट - High rainfall, leaching)</option>
+                    <option value="sandy">Sandy (रेतीली मिट्टी - Quick draining, light)</option>
+                    <option value="clay">Clay (चिकनी मिट्टी - Heavy, high water capacity)</option>
+                    <option value="loamy">Loamy (दोमट मिट्टी - Ideal balanced drainage)</option>
+                  </select>
+                  <span class="field-hint" data-i18n="hintSoilType">Soil texture determines root aeration and moisture
+                    retention</span>
+                  <div class="field-error" id="err-SoilType"></div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- SECTION 2: Soil Nutrients (NPK) & pH -->
+            <fieldset class="form-section-fieldset">
+              <legend class="form-section-legend">
+                <span class="legend-step-num">2</span>
+                <span class="legend-title" data-i18n="sec2Title">Soil Nutrients (NPK) & Reaction (pH)</span>
+                <span class="field-badge auto-badge" data-i18n="badgeAutoFillable">Auto-fillable</span>
+              </legend>
+              <div class="form-grid form-grid-2col">
+                <div class="form-group" id="group-N">
+                  <div class="label-row">
+                    <label for="inputN" data-i18n="labelN">🧪 Nitrogen (N) * <span
+                        class="unit-text">(kg/ha)</span></label>
+                    <span class="data-source-tag" id="sourceTag-N">Manual</span>
+                  </div>
+                  <input type="number" id="inputN" placeholder="e.g. 90" min="0" max="250" step="1" required
+                    oninput="markFieldManual('N')">
+                  <span class="field-hint" data-i18n="hintN">Promotes green leafy vegetative growth. Normal: 50–150
+                    kg/ha</span>
+                  <div class="field-error" id="err-N"></div>
+                </div>
+
+                <div class="form-group" id="group-P">
+                  <div class="label-row">
+                    <label for="inputP" data-i18n="labelP">🧪 Phosphorus (P) * <span
+                        class="unit-text">(kg/ha)</span></label>
+                    <span class="data-source-tag" id="sourceTag-P">Manual</span>
+                  </div>
+                  <input type="number" id="inputP" placeholder="e.g. 42" min="0" max="200" step="1" required
+                    oninput="markFieldManual('P')">
+                  <span class="field-hint" data-i18n="hintP">Stimulates root development and flowering. Normal: 20–60
+                    kg/ha</span>
+                  <div class="field-error" id="err-P"></div>
+                </div>
+
+                <div class="form-group" id="group-K">
+                  <div class="label-row">
+                    <label for="inputK" data-i18n="labelK">🧪 Potassium (K) * <span
+                        class="unit-text">(kg/ha)</span></label>
+                    <span class="data-source-tag" id="sourceTag-K">Manual</span>
+                  </div>
+                  <input type="number" id="inputK" placeholder="e.g. 43" min="0" max="200" step="1" required
+                    oninput="markFieldManual('K')">
+                  <span class="field-hint" data-i18n="hintK">Increases disease resistance & drought tolerance. Normal:
+                    20–50 kg/ha</span>
+                  <div class="field-error" id="err-K"></div>
+                </div>
+
+                <div class="form-group" id="group-PH">
+                  <div class="label-row">
+                    <label for="inputPH" data-i18n="labelPH">⚗️ Soil pH *</label>
+                    <span class="data-source-tag" id="sourceTag-PH">Manual</span>
+                  </div>
+                  <input type="number" id="inputPH" placeholder="e.g. 6.5" min="3.0" max="10.0" step="0.1" required
+                    oninput="markFieldManual('PH')">
+                  <span class="field-hint" data-i18n="hintPH">Acidity/alkalinity scale. Optimal range 6.0–7.5 for most
+                    Indian crops</span>
+                  <div class="field-error" id="err-PH"></div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- SECTION 3: Weather & Water Availability -->
+            <fieldset class="form-section-fieldset">
+              <legend class="form-section-legend">
+                <span class="legend-step-num">3</span>
+                <span class="legend-title" data-i18n="sec3Title">Climate & Water Conditions</span>
+                <span class="field-badge auto-badge" data-i18n="badgeAutoFillable">Auto-fillable</span>
+              </legend>
+              <div class="form-grid form-grid-3col">
+                <div class="form-group" id="group-Temp">
+                  <div class="label-row">
+                    <label for="inputTemp" data-i18n="labelTemp">🌡 Temperature * <span
+                        class="unit-text">(°C)</span></label>
+                    <span class="data-source-tag" id="sourceTag-Temp">Manual</span>
+                  </div>
+                  <input type="number" id="inputTemp" placeholder="e.g. 25" min="-5" max="55" step="0.5" required
+                    oninput="markFieldManual('Temp')">
+                  <span class="field-hint" data-i18n="hintTemp">Average daytime temperature during crop cycle</span>
+                  <div class="field-error" id="err-Temp"></div>
+                </div>
+
+                <div class="form-group" id="group-Humidity">
+                  <div class="label-row">
+                    <label for="inputHumidity" data-i18n="labelHumidity">💧 Humidity * <span
+                        class="unit-text">(%)</span></label>
+                    <span class="data-source-tag" id="sourceTag-Humidity">Manual</span>
+                  </div>
+                  <input type="number" id="inputHumidity" placeholder="e.g. 70" min="5" max="100" step="1" required
+                    oninput="markFieldManual('Humidity')">
+                  <span class="field-hint" data-i18n="hintHumidity">Relative atmospheric humidity</span>
+                  <div class="field-error" id="err-Humidity"></div>
+                </div>
+
+                <div class="form-group" id="group-Rainfall">
+                  <div class="label-row">
+                    <label for="inputRainfall" data-i18n="labelRainfall">🌧 Rainfall / Water * <span
+                        class="unit-text">(mm)</span></label>
+                    <span class="data-source-tag" id="sourceTag-Rainfall">Manual</span>
+                  </div>
+                  <input type="number" id="inputRainfall" placeholder="e.g. 150" min="0" max="600" step="1" required
+                    oninput="markFieldManual('Rainfall')">
+                  <span class="field-hint" data-i18n="hintRainfall">Monthly rain or equivalent irrigation
+                    available</span>
+                  <div class="field-error" id="err-Rainfall"></div>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="form-submit-wrapper">
+              <button type="submit" class="btn btn-primary btn-submit-recommend" id="submitBtn">
+                🌱 <span data-i18n="btnGetRec">Get Crop Recommendation</span>
+              </button>
+              <p class="submit-note" data-i18n="submitNote">Evaluates crop suitability against regional agronomic
+                baselines and sowing season</p>
+            </div>
+          </form>
+
+          <!-- Soil Health Advisory Box -->
+          <div id="soilHealthTips" class="soil-health-alert-box" style="display:none;"></div>
+
+          <!-- Loading State -->
+          <div id="cropLoading" class="loading-panel hidden">
+            <div class="spinner"></div>
+            <p class="loading-text" data-i18n="analyzing">Evaluating soil nutrient balances, climate parameters, and
+              current seasonal window...</p>
+          </div>
+
+          <!-- Results Container -->
+          <div id="cropResults" class="result-container hidden"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== MARKET PRICE PAGE (MANDI PRICES) ===== -->
+  <main class="page" id="page-market">
+    <section class="section">
+      <div class="container">
+        <div class="section-header animate-fade-in-up">
+          <span class="section-label" data-i18n="marketLabel">📈 Mandi Intelligence</span>
+          <h2 class="section-title" data-i18n="marketTitle">Mandi Crop Prices</h2>
+          <p class="section-subtitle" data-i18n="marketSubtitle">Track official agricultural market arrivals, modal
+            prices per quintal, and seasonal trends across India.</p>
+        </div>
+
+        <!-- Filter Controls Card -->
+        <div class="market-filter-card">
+          <div class="market-filter-header">
+            <h3 class="filter-card-title">🔍 <span data-i18n="filterTitle">Search & Filter Mandis</span></h3>
+            <div class="filter-actions-top">
+              <button class="btn btn-secondary btn-sm" onclick="refreshMandiPrices()"
+                title="Refresh live market prices">
+                🔄 <span data-i18n="btnRefresh">Refresh Data</span>
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="resetAdvFilters()" title="Reset all filters">
+                ↺ <span data-i18n="btnReset">Reset</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="advanced-filters">
+            <div class="filter-group">
+              <label for="advCropFilter" data-i18n="filterCrop">Commodity / Crop</label>
+              <div class="select-wrapper">
+                <select id="advCropFilter" onchange="updateAdvFilters('crop')">
+                  <option value="all">All Commodities (सभी फसलें)</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-group">
+              <label for="advStateFilter" data-i18n="filterState">State</label>
+              <div class="select-wrapper">
+                <select id="advStateFilter" onchange="updateAdvFilters('state')">
+                  <option value="all">All States (सभी राज्य)</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-group">
+              <label for="advDistrictFilter" data-i18n="filterDistrict">District</label>
+              <div class="select-wrapper">
+                <select id="advDistrictFilter" onchange="updateAdvFilters('district')">
+                  <option value="all">All Districts (सभी जिले)</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-group">
+              <label for="advMarketFilter" data-i18n="filterMandi">Market / Mandi</label>
+              <div class="select-wrapper">
+                <select id="advMarketFilter" onchange="updateAdvFilters('market')">
+                  <option value="all">All Markets (सभी मंडियां)</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-submit-group">
+              <button class="btn btn-primary btn-search-mandi" onclick="applyAdvFilters()">
+                🔍 <span data-i18n="btnApplyFilters">Apply Filters</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Source & Status Indicator -->
+        <div id="dataSourceNote" class="market-status-banner">
+          ⏳ <span data-i18n="loadingMarket">Loading price data from Agmarknet / Data.gov.in...</span>
+        </div>
+
+        <!-- Price Table & Mobile Card Container -->
+        <div class="price-table-wrapper" id="priceTableWrapper">
+          <table class="price-table" id="priceTable">
+            <thead>
+              <tr>
+                <th data-i18n="thCrop">Crop / Commodity</th>
+                <th data-i18n="thMandi">Mandi & State</th>
+                <th data-i18n="thPrice">Price (₹/quintal)</th>
+                <th data-i18n="thChange">Price Change</th>
+                <th data-i18n="thStatus">Data Source</th>
+              </tr>
+            </thead>
+            <tbody id="priceTableBody">
+            </tbody>
+          </table>
+          <!-- Mobile Cards Container (Automatically rendered on smartphones) -->
+          <div id="priceCardsContainer" class="price-cards-mobile-view"></div>
+        </div>
+
+        <!-- Price Trends Chart -->
+        <div class="chart-container">
+          <div class="chart-header-row">
+            <div>
+              <h3 data-i18n="chartTitle">📊 Seasonal Price Trends & Benchmarks</h3>
+              <p class="chart-subtitle" data-i18n="chartSubtitle">6-month price movement and MSP benchmark comparison
+                for selected commodity</p>
+            </div>
+            <span class="chart-crop-badge" id="chartCropBadge">Wheat</span>
+          </div>
+          <div class="chart-canvas-wrapper">
+            <canvas id="priceChart" height="90"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== DASHBOARD PAGE (FARMER DASHBOARD) ===== -->
+  <main class="page" id="page-dashboard">
+    <section class="section">
+      <div class="container">
+        <div class="section-header animate-fade-in-up">
+          <span class="section-label" data-i18n="dashLabel">🧑‍🌾 Farm Management</span>
+          <h2 class="section-title" data-i18n="dashTitle">Farmer Dashboard</h2>
+          <p class="section-subtitle" data-i18n="dashSubtitle">Personalized crop records, local weather advisories, and
+            saved recommendations.</p>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Profile Sidebar Card -->
+          <div class="profile-card animate-fade-in-left">
+            <div class="profile-avatar-wrap">
+              <div class="profile-avatar">🧑‍🌾</div>
+              <span class="profile-badge-online">Active</span>
+            </div>
+            <h3 id="profileName" class="profile-title">Kisan Bhai</h3>
+            <p id="profileLocation" class="profile-loc">📍 Uttar Pradesh</p>
+
+            <div class="profile-stats">
+              <div class="profile-stat-box">
+                <div class="stat-num" id="statRecs">0</div>
+                <div class="stat-label" data-i18n="statRecs">Saved Plans</div>
+              </div>
+              <div class="profile-stat-box">
+                <div class="stat-num" id="statCrops">0</div>
+                <div class="stat-label" data-i18n="statCrops">Crops Tracked</div>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <button class="btn btn-secondary btn-sm btn-block" onclick="editProfile()">
+                ✏️ <span data-i18n="btnEditProfile">Edit Profile & Region</span>
+              </button>
+              <button class="btn btn-primary btn-sm btn-block" onclick="showPage('recommend')">
+                🌱 <span data-i18n="btnNewRec">New Crop Advisory</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dashboard Main Content -->
+          <div class="dashboard-content animate-fade-in-right">
+            <!-- Contextual Weather Advisory -->
+            <div class="alert-banner weather-advisory-banner" id="weatherAlert">
+              <div class="alert-icon">🌦</div>
+              <div class="alert-text">
+                <strong data-i18n="alertWeatherTitle">Regional Seasonal Advisory:</strong>
+                <span id="weatherAlertText" data-i18n="alertWeather">Favorable temperature conditions for rabi sowing.
+                  Ensure pre-sowing irrigation and certified seed treatment.</span>
+              </div>
+            </div>
+
+            <!-- Saved Crop Recommendations -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>⭐ <span data-i18n="savedRecs">Saved Crop Recommendations</span></h3>
+                <span class="dash-count-pill" id="savedCountPill">0 Saved</span>
+              </div>
+              <div id="savedRecsList" class="saved-recs-container">
+                <div class="dash-empty-state">
+                  <div class="empty-icon">🌱</div>
+                  <h4 data-i18n="emptySavedTitle">No saved recommendations yet</h4>
+                  <p data-i18n="noSavedRecs">Test your field's soil and weather in Crop AI to save personalized crop
+                    advisories here.</p>
+                  <button class="btn btn-primary btn-sm" onclick="showPage('recommend')">
+                    🌱 <span data-i18n="btnGoCropAI">Check Crop AI</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Crop History -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>📋 <span data-i18n="cropHistory">Crop Prediction History</span></h3>
+                <button class="btn-text-action" onclick="clearHistory()" data-i18n="btnClearHistory">Clear
+                  History</button>
+              </div>
+              <div id="cropHistoryList" class="history-list-container">
+                <div class="dash-empty-state">
+                  <div class="empty-icon">📋</div>
+                  <h4 data-i18n="emptyHistoryTitle">No recent history</h4>
+                  <p data-i18n="noHistory">Your generated crop assessments will automatically appear in this activity
+                    log.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Regional Crop Disease & Pest Watch (Responsible & Verified) -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3>🔬 <span data-i18n="diseaseAlerts">Regional Crop Health & Pest Watch</span></h3>
+                <span class="source-tag-icar">ICAR / KVK Advisory</span>
+              </div>
+              <div id="diseaseAlertsList" class="disease-alerts-grid">
+                <div class="advisory-card advisory-warning">
+                  <div class="advisory-header">
+                    <span class="advisory-badge warn">Seasonal Watch</span>
+                    <span class="advisory-crop">Potato & Tomato (Solanaceous)</span>
+                  </div>
+                  <strong data-i18n="diseaseAlert1Title">Late Blight Prevention Advisory</strong>
+                  <p data-i18n="diseaseAlert1">Cool temperatures and high morning humidity increase fungal blight risk.
+                    Inspect lower foliage. Consult your local Krishi Vigyan Kendra (KVK) for certified bio-control
+                    guidance before spraying chemical fungicides.</p>
+                  <div class="advisory-footer">
+                    <span>📌 Source: ICAR-CPRI Guidelines</span>
+                    <span>📞 KVK Helpline: 1800-180-1551</span>
+                  </div>
+                </div>
+
+                <div class="advisory-card advisory-info">
+                  <div class="advisory-header">
+                    <span class="advisory-badge info">Pest Surveillance</span>
+                    <span class="advisory-crop">Rice / Paddy & Pulses</span>
+                  </div>
+                  <strong data-i18n="diseaseAlert2Title">Stem Borer & Pod Borer Monitoring</strong>
+                  <p data-i18n="diseaseAlert2">Install pheromone traps (4–5 per acre) for early pest detection. Avoid
+                    prophylactic pesticide overuse to protect natural beneficial predators like spiders and ladybird
+                    beetles.</p>
+                  <div class="advisory-footer">
+                    <span>📌 Source: National IPM Centre</span>
+                    <span>📞 Kisan Call Centre</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== MOBILE BOTTOM NAVIGATION (Smartphone Support) ===== -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile Navigation">
+    <a href="#" class="mobile-nav-item active" data-page="home" onclick="showPage('home')">
+      <span class="mobile-nav-icon">🏠</span>
+      <span class="mobile-nav-label" data-i18n="navHome">Home</span>
+    </a>
+    <a href="#" class="mobile-nav-item" data-page="recommend" onclick="showPage('recommend')">
+      <span class="mobile-nav-icon">🌱</span>
+      <span class="mobile-nav-label" data-i18n="navCrop">Crop AI</span>
+    </a>
+    <a href="#" class="mobile-nav-item" data-page="market" onclick="showPage('market')">
+      <span class="mobile-nav-icon">📈</span>
+      <span class="mobile-nav-label" data-i18n="navMarket">Market</span>
+    </a>
+    <a href="#" class="mobile-nav-item" data-page="dashboard" onclick="showPage('dashboard')">
+      <span class="mobile-nav-icon">🧑‍🌾</span>
+      <span class="mobile-nav-label" data-i18n="navDashboard">Dashboard</span>
+    </a>
+  </nav>
+
+  <!-- ===== FLOATING AI CHATBOT ===== -->
+  <button class="chatbot-fab" id="chatFab" onclick="toggleChat()" aria-label="Open Agriculture Assistant">
+    <span class="fab-icon">💬</span>
+    <span class="fab-label" data-i18n="fabChatText">Ask Agri Mitra</span>
+  </button>
+  <div class="chatbot-window" id="chatWindow" role="dialog" aria-labelledby="chatBotHeading">
+    <div class="chatbot-header">
+      <div class="chat-header-info">
+        <span class="chat-avatar">🤖</span>
+        <div>
+          <h4 id="chatBotHeading" data-i18n="chatTitle">Agri Mitra Assistant</h4>
+          <span class="chat-substatus" data-i18n="chatOnline">Farming Advisory • English & Hindi</span>
+        </div>
+      </div>
+      <button class="chat-close-btn" onclick="toggleChat()" aria-label="Close Assistant">✕</button>
+    </div>
+
+    <!-- Quick prompt chips -->
+    <div class="chat-chips-bar">
+      <button class="chat-chip" onclick="sendQuickPrompt('What is the best sowing time for wheat?')">🌾 Wheat
+        Sowing</button>
+      <button class="chat-chip" onclick="sendQuickPrompt('How do I treat low Nitrogen in soil?')">🧪 Low
+        Nitrogen</button>
+      <button class="chat-chip" onclick="sendQuickPrompt('Tell me about PM-KISAN scheme')">🏛 PM-KISAN</button>
+      <button class="chat-chip" onclick="sendQuickPrompt('What are current mandi prices for Mustard?')">📈 Mustard
+        Price</button>
+    </div>
+
+    <div class="chatbot-messages" id="chatMessages">
+      <div class="chat-msg bot" data-i18n="chatWelcome">
+        Namaste! 🙏 I'm your Agri Mitra farming companion. Ask me any question about crops, soil nutrients, mandi rates,
+        or agricultural schemes!
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatInput" placeholder="Ask a farming question..." data-i18n-placeholder="chatPlaceholder"
+        onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()" aria-label="Send message">➤</button>
+    </div>
+  </div>
+
+  <!-- ===== EDIT PROFILE MODAL ===== -->
+  <div id="profileModal" class="modal-backdrop" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ <span data-i18n="editProfileTitle">Edit Farmer Profile</span></h3>
+        <button class="modal-close-btn" onclick="closeProfileModal()" aria-label="Close">✕</button>
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label for="editName" data-i18n="labelName">Farmer / Farm Name</label>
+        <input type="text" id="editName" placeholder="e.g. Kisan Bhai" class="modal-input">
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label for="editLocation" data-i18n="labelProfileLocation">Location / State</label>
+        <input type="text" id="editLocation" placeholder="e.g. Uttar Pradesh, Jaipur, etc." class="modal-input">
+      </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label for="editGeminiKey">🤖 Google Gemini API Key (Optional)</label>
+        <input type="password" id="editGeminiKey" placeholder="Paste your free API key here" class="modal-input">
+        <div class="field-hint">
+          Optional: Free key from <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI
+            Studio</a> unlocks conversational AI. Without a key, Agri Mitra uses our built-in offline agricultural
+          knowledge base.
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="saveProfile()">💾 <span data-i18n="btnSave">Save
+            Changes</span></button>
+        <button class="btn btn-secondary" onclick="closeProfileModal()"><span
+            data-i18n="btnCancel">Cancel</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FARMING CALCULATOR MODAL ===== -->
+  <div id="farmingModal" class="modal-backdrop" style="display:none;">
+    <div class="modal-card modal-card-large">
+      <div class="farm-calc-header">
+        <div class="calc-header-title-row">
+          <h3>🌾 <span id="farmCalcCropName">--</span> <span data-i18n="calcTitle">Farming Calculator</span></h3>
+          <button onclick="closeFarmingModal()" class="modal-close-btn light" aria-label="Close">✕</button>
+        </div>
+        <div class="calc-header-meta">
+          <span>📅 <strong id="farmCalcSeason">--</strong></span>
+          <span>⏱ <strong id="farmCalcDuration">--</strong></span>
+        </div>
+      </div>
+
+      <div class="farm-calc-body">
+        <div class="calc-quick-stats">
+          <div class="calc-stat-tile">
+            <span class="calc-stat-label">Seed Rate</span>
+            <span class="calc-stat-val primary" id="farmCalcSeedRate">--</span>
+          </div>
+          <div class="calc-stat-tile">
+            <span class="calc-stat-label">Seed Price (Avg)</span>
+            <span class="calc-stat-val amber" id="farmCalcSeedPrice">--</span>
+          </div>
+          <div class="calc-stat-tile">
+            <span class="calc-stat-label">Water Need</span>
+            <span class="calc-stat-val blue" id="farmCalcWater">--</span>
+          </div>
+        </div>
+
+        <div class="calc-input-box">
+          <label for="landAreaInput" class="calc-input-label">📐 Enter Your Land Area (in Acres)</label>
+          <div class="calc-input-row">
+            <input type="number" id="landAreaInput" placeholder="e.g. 2.5" min="0.1" step="0.1"
+              class="calc-input-field">
+            <button class="btn btn-primary" onclick="calculateFarming()">🧮 Calculate</button>
+          </div>
+        </div>
+
+        <div id="farmCalcResults" style="display:none;" class="calc-results-panel">
+          <h4 class="calc-results-title">📊 Estimated Resource Requirements</h4>
+          <div class="calc-estimates-grid">
+            <div class="calc-estimate-card green">
+              <span class="est-label">🌱 Total Seed Needed</span>
+              <span class="est-val" id="calcTotalSeed">--</span>
+            </div>
+            <div class="calc-estimate-card amber">
+              <span class="est-label">💰 Est. Seed Cost</span>
+              <span class="est-val" id="calcSeedCost">--</span>
+            </div>
+            <div class="calc-estimate-card blue">
+              <span class="est-label">💧 Est. Total Water</span>
+              <span class="est-val" id="calcWaterTotal">--</span>
+            </div>
+            <div class="calc-estimate-card purple">
+              <span class="est-label">📏 Area in Hectares</span>
+              <span class="est-val" id="calcLandHectare">--</span>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="irrigation-title">💧 Irrigation Stage Schedule (ICAR Guide)</h4>
+        <div class="table-scroll-wrap">
+          <table class="irrigation-table">
+            <thead>
+              <tr>
+                <th>Crop Growth Stage</th>
+                <th>Days from Sowing</th>
+                <th>Water Requirement</th>
+                <th>Agronomic Guidance</th>
+              </tr>
+            </thead>
+            <tbody id="irrigationSchedule"></tbody>
+          </table>
+        </div>
+
+        <div class="calc-footer-sources">
+          <p>Agronomic norms based on ICAR recommendations & SeedNet India</p>
+          <div class="calc-source-links">
+            <a href="https://seedtrace.gov.in/ms014/" target="_blank" rel="noopener">SeedTrace Portal ↗</a>
+            <a href="https://seednet.gov.in/" target="_blank" rel="noopener">SeedNet India ↗</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

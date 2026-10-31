@@ -1,0 +1,14 @@
+{
+  "name": "agri-mitra",
+  "version": "1.0.0",
+  "description": "Agri Mitra – Smart AI Guide for Indian Farmers",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install-backend": "cd backend && npm install",
+    "build": "cd backend && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
